@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Funny Story with View Counter</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      padding: 2rem;
+      background: #fdf6e3;
+      color: #333;
+      max-width: 700px;
+      margin: auto;
+    }
+    .story {
+      margin-bottom: 2rem;
+    }
+    .counter {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #008080;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐔 The Chicken and the Elevator 🚪</h1>
+  <div class="story">
+    Once upon a time, a chicken walked into a fancy hotel and waddled up to the elevator.<br><br>
+    The bellboy asked, “What floor?”<br>
+    The chicken said, “Egg-cellent question. Surprise me!”<br><br>
+    The elevator doors closed. Moments later, the elevator dinged open... on the rooftop.<br><br>
+    The chicken looked around, nodded thoughtfully, and said, “Cluckin’ worth it.” 🐣  
+  </div>
+
+  <div class="counter" id="view-counter">Loading views...</div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/pages/increment/20b86e37-a3bb-447f-931f-67fef5e5bd49", {
+          method: "POST"
+        });
+
+        const data = await res.json();
+        if (data.count !== undefined) {
+          document.getElementById("view-counter").innerText = `This story has been viewed ${data.count} times!`;
+        } else {
+          document.getElementById("view-counter").innerText = `Could not get view count 😕`;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("view-counter").innerText = `Error fetching view count. Check console.`;
+      }
+    });
+  </script>
+</body>
+</html>
